@@ -1,0 +1,77 @@
+{
+  "name": "cap-products",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/cds": "^8",
+    "express": "^4",
+    "@cap-js/hana": "^1",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "@cap-js/cds-types": "^0.9.0",
+    "@cap-js/sqlite": "^1",
+    "@sap/cds-dk": "^8",
+    "cds-swagger-ui-express": "^0.3.0"
+  },
+  "scripts": {
+    "start": "cds run",
+    "build": "cds build/all --clean;cp gen/srv/srv/csn.json srv/gen/;cp -r gen/db/src/gen db/src"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "env": {
+      "es2020": true,
+      "node": true,
+      "jest": true,
+      "mocha": true
+    },
+    "globals": {
+      "SELECT": true,
+      "INSERT": true,
+      "UPDATE": true,
+      "DELETE": true,
+      "CREATE": true,
+      "DROP": true,
+      "CDL": true,
+      "CQL": true,
+      "CXL": true,
+      "cds": true
+    },
+    "rules": {
+      "no-console": "off",
+      "require-atomic-updates": "off"
+    }
+  },
+  "cds": {
+    "i18n": {
+      "default_language": "es",
+      "folders": [
+        "_i18n",
+        "i18n",
+        "@i18n",
+        "assets/i18n"
+      ]
+    },
+    "features": {
+      "graphql": true
+    },
+    "requires": {
+      "db": {
+        "kind": "hana"
+      }
+    },
+    "hana": {
+      "deploy-format": "hdbtable"
+    },
+    "sql": {
+      "native_hana_associations": false
+    }
+  },
+  "sapux": [
+    "app/product"
+  ]
+}
