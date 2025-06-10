@@ -5,21 +5,26 @@
   "repository": "<Add your repository here>",
   "license": "UNLICENSED",
   "private": true,
+  "engines": {
+    "node": "^16.0.0 || ^18.0.0 || ^20.0.0"
+  },
   "dependencies": {
-    "@sap/cds": "^8",
-    "express": "^4",
     "@cap-js/hana": "^1",
-    "cors": "^2.8.5"
+    "@sap/cds": "^8.9.4",
+    "@sap/hana-client": "^2.24.26",
+    "@sap/hdi-deploy": "^5.4.2",
+    "@sap/xssec": "^4.7.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
   },
   "devDependencies": {
     "@cap-js/cds-types": "^0.9.0",
-    "@cap-js/sqlite": "^1",
-    "@sap/cds-dk": "^8",
+    "@cap-js/sqlite": "^1.11.0",
+    "@sap/cds-dk": "^8.9.4",
     "cds-swagger-ui-express": "^0.3.0"
   },
   "scripts": {
-    "start": "cds run",
-    "build": "cds build/all --clean;cp gen/srv/srv/csn.json srv/gen/;cp -r gen/db/src/gen db/src"
+    "start": "cds-serve"
   },
   "eslintConfig": {
     "extends": "eslint:recommended",
@@ -60,8 +65,33 @@
       "graphql": true
     },
     "requires": {
-      "db": {
-        "kind": "hana"
+      "[dev]": {
+        "db": {
+          "kind": "hana"
+        },
+        "auth": "dummy"
+      },
+      "[production]": {
+        "db": {
+          "kind": "hana"
+        },
+        "auth": "xsuaa"
+      },
+      "sapbackend": {
+        "kind": "odata-v2",
+        "model": "srv/external/sapbacked",
+        "[development]": {
+          "credentials": {
+            "requestTimeout": 30000,
+            "url": "http://erp13.sap4practice.com:9037/sap/opu/odata/sap/YSAPUI5_SRV_01",
+            "authentication": "NoAuthentication"
+          }
+        },
+        "[production]": {
+          "credentials": {
+            "destination": "NPL_Backend"
+          }
+        }
       }
     },
     "hana": {

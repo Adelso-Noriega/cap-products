@@ -132,7 +132,7 @@ context sales {
     };
 
     entity Suppliers : cuid, managed {
-        Name    : type of materials.Products : Name;
+        Name    : Name;
         Address : Address;
         Email   : String;
         Phone   : String;
